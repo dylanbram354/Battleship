@@ -15,21 +15,22 @@ class Player:
         self.fleet = [self.destroyer, self.submarine, self.battleship_1, self.battleship_2, self.aircraft_carrier]
 
     def place_ships(self):
-        print(f"Welcome {self.name}! Here is your board:\n")
+        print(f"\nWelcome {self.name}! Here is your board:\n")
         for row in self.my_board.board:
             print(row)
         print(f'\n"0" represents an empty, un-attacked space. '
-              f'\n"X" will represent hits, "-" will represent misses.'
+              f'\n"X" will represent hits, "-" will represent misses, and your ships will be marked with '
+              f'their respective indicators.'
               f'\n\nThere are {self.my_board.rows} rows and {self.my_board.columns} columns.'
               f'\nRows are numbered 1-{self.my_board.rows} from left to right, columns are numbered '
               f'1-{self.my_board.columns} top to bottom.')
         print(f"\nHere is your fleet: ")
         for ship in self.fleet:
-            print(f"\nShip: {ship.name}, length: {ship.length} spaces, marked on board by {ship.placeholder}")
+            print(f"\n{ship.name}: takes up {ship.length} spaces. Marked on board by '{ship.placeholder}'.")
         for ship in self.fleet:
             direction = ''
             while direction == '':
-                direction = input(f'\nNow placing {ship.name}. '
+                direction = input(f"\nNow placing {self.name}'s {ship.name}. "
                                   f'Would you like to place this ship vertically or horizontally?'
                                   f'\nEnter "vertical" or "horizontal". ').upper()
                 if direction == 'HORIZONTAL':
@@ -37,7 +38,8 @@ class Player:
                     while row == '':
                         try:
                             row = input(f'\nYou chose to place {ship.name} horizontally. '
-                                        f'In which row would you like to place your {ship.name}? ')
+                                        f'In which row would you like to place your {ship.name} '
+                                        f'(1-{self.my_board.rows})? ')
                             row = int(row)
                             if row > self.my_board.rows or row <= 0:
                                 row = ''
@@ -50,7 +52,8 @@ class Player:
                     while column == '':
                         try:
                             column = input(f"\nYou have chosen to place {ship.name} in row {row}. "
-                                           f"Enter the the column number for LEFTMOST point of {ship.name}. ")
+                                           f"Enter the the column number for LEFTMOST point of {ship.name} "
+                                           f"(1-{self.my_board.columns}). ")
                             column = int(column)
                             if column > self.my_board.columns or column <= 0:
                                 column = ''
@@ -84,7 +87,8 @@ class Player:
                     while column == '':
                         try:
                             column = input(f'\nYou chose to place {ship.name} vertically. '
-                                        f'In which column would you like to place your {ship.name}? ')
+                                           f'In which column would you like to place your {ship.name} '
+                                           f'(1-{self.my_board.columns})? ')
                             column = int(column)
                             if column > self.my_board.columns or column <= 0:
                                 column = ''
@@ -97,7 +101,8 @@ class Player:
                     while row == '':
                         try:
                             row = input(f"\nYou have chosen to place {ship.name} in column {column}. "
-                                           f"Enter the the row number for TOPMOST point of {ship.name}. ")
+                                        f"Enter the the row number for TOPMOST point of {ship.name} "
+                                        f"(1-{self.my_board.rows}). ")
                             row = int(row)
                             if row > self.my_board.rows or row <= 0:
                                 row = ''
@@ -136,7 +141,6 @@ class Player:
             print(row)
 
     def display_my_board(self):
-        print('\nYour board:'
-              '\n"X" is opponent hit, "-" is opponent miss.')
+        print('\n"X" is opponent hit, "-" is opponent miss.')
         for row in self.my_board.board:
             print(row)

@@ -7,12 +7,42 @@ class Game:
         self.player_two = Player()
 
     def run_game(self):
-        self.player_one.place_ships()
-        self.attack(self.player_two, self.player_one)
+        print(f"\nWelcome to BATTLESHIP! "
+              f"\n\nEach player will position their fleet around the game board. Players will take turns "
+              f"launching missiles (blindly) at their opponent's board."
+              f"\nIf an attacker's missile hits an opponent's ship, that space will be marked as a HIT! "
+              f"If not, it will be marked as a MISS."
+              f"\nOnce all of a ship's spaces have been hit, the ship sinks and is removed from the fleet."
+              f"\nThe first player to knock out their opponent's fleet wins the game!")
+        user_input = 'yes'
+        while user_input == 'yes':
+            self.player_one.name = input(f"\n\nPlayer One, please enter your name: ")
+            self.player_one.place_ships()
+            self.player_two.name = input(f"\n\nPlayer Two, please enter your name: ")
+            self.player_two.place_ships()
+            while len(self.player_one.fleet) > 0 and len(self.player_two.fleet) > 0:
+                self.attack(self.player_one, self.player_two)
+                if len(self.player_two.fleet) == 0:
+                    print(f"\nGAME OVER! {self.player_two.name}'s fleet depleted!"
+                          f"{self.player_one.name} wins!")
+                    break
+                self.attack(self.player_two, self.player_one)
+                if len(self.player_one.fleet) == 0:
+                    print(f"\nGAME OVER! {self.player_one.name}'s fleet depleted!"
+                          f"{self.player_two.name} wins!")
+            user_input = ''
+            while user_input != 'yes:':
+                user_input = input("\n\nPlay again? (yes/no) ")
+                if user_input == 'no':
+                    print(f'\nSee you next time!')
+                else:
+                    print(f"Invalid input! Try again...")
 
     def attack(self, attacker, defender):
         print(f"\n{attacker.name}'s turn! Here is what you know of {defender.name}'s board: ")
         attacker.display_opponent_board()
+        print(f"\nAnd here is your board: ")
+        attacker.display_my_board()
         marker = ''
         while marker == '':
             row = ''
@@ -59,6 +89,11 @@ class Game:
                 if ship.placeholder in row:
                     alive = 'yes'
             if alive == 'no':
-                print(f"\n{attacker.name} sunk {defender.name}'s {ship.name}!")
+                print(f"\n{attacker.name} sunk {defender.name}'s {ship.name}!"
+                      f"\nRemaining ships in {defender.name}'s fleet:")
                 defender.fleet.remove(ship)
+                for ships in defender.fleet:
+                    print(ships.name)
+
+
 
