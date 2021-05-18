@@ -28,21 +28,25 @@ class Game:
                     break
                 self.attack(self.player_two, self.player_one)
                 if len(self.player_one.fleet) == 0:
-                    print(f"\nGAME OVER! {self.player_one.name}'s fleet depleted!"
+                    print(f"\nGAME OVER! {self.player_one.name}'s fleet depleted! "
                           f"{self.player_two.name} wins!")
             user_input = ''
-            while user_input != 'yes:':
-                user_input = input("\n\nPlay again? (yes/no) ")
+            while user_input == '':
+                user_input = input("\nPlay again? (yes/no) ")
                 if user_input == 'no':
                     print(f'\nSee you next time!')
-                else:
-                    print(f"Invalid input! Try again...")
+                elif user_input != 'yes':
+                    print(f"\nInvalid input! Try again...")
+                    user_input = ''
+
 
     def attack(self, attacker, defender):
-        print(f"\n{attacker.name}'s turn! Here is what you know of {defender.name}'s board: ")
-        attacker.display_opponent_board()
-        print(f"\nAnd here is your board: ")
+        input(f"\nPress 'enter' to continue to {attacker.name}'s turn. "
+              f"(No peeking, {defender.name}!)")
+        print(f"\n{attacker.name}'s turn! Here is your board: ")
         attacker.display_my_board()
+        print(f"\nAnd here is what you know of {defender.name}'s board: ")
+        attacker.display_opponent_board()
         marker = ''
         while marker == '':
             row = ''
@@ -94,7 +98,4 @@ class Game:
                 defender.fleet.remove(ship)
                 for ships in defender.fleet:
                     print(ships.name)
-
-        input(f"\nPress 'enter' to continue to {defender.name}'s turn."
-              f"(No peeking, {attacker.name}!)")
 
