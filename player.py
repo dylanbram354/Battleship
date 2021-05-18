@@ -52,8 +52,8 @@ class Player:
                     while column == '':
                         try:
                             column = input(f"\nYou have chosen to place {ship.name} in row {row}. "
-                                           f"Enter the the column number for LEFTMOST point of {ship.name} "
-                                           f"(1-{self.my_board.columns}). ")
+                                           f"Enter the the column number for the LEFTMOST point of {ship.name} "
+                                           f"(1-{self.my_board.columns}): ")
                             column = int(column)
                             if column > self.my_board.columns or column <= 0:
                                 column = ''
@@ -71,7 +71,6 @@ class Player:
                     i = column
                     while i < column + ship.length:
                         if row[i] == 0:
-                            row[i] = ship.placeholder
                             i += 1
                         else:
                             print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
@@ -79,6 +78,10 @@ class Player:
                             direction = ''
                             break
                     if direction != '':
+                        i = column
+                        while i < column + ship.length:
+                            row[i] = ship.placeholder
+                            i += 1
                         print(f"{ship.name} placed! Here is your board as of now: ")
                         for row in self.my_board.board:
                             print(row)
@@ -101,8 +104,8 @@ class Player:
                     while row == '':
                         try:
                             row = input(f"\nYou have chosen to place {ship.name} in column {column}. "
-                                        f"Enter the the row number for TOPMOST point of {ship.name} "
-                                        f"(1-{self.my_board.rows}). ")
+                                        f"Enter the the row number for the TOPMOST point of {ship.name} "
+                                        f"(1-{self.my_board.rows}): ")
                             row = int(row)
                             if row > self.my_board.rows or row <= 0:
                                 row = ''
@@ -119,7 +122,6 @@ class Player:
                     i = row
                     while i < row + ship.length:
                         if self.my_board.board[i][column] == 0:
-                            self.my_board.board[i][column] = ship.placeholder
                             i += 1
                         else:
                             print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
@@ -127,7 +129,11 @@ class Player:
                             direction = ''
                             break
                     if direction != '':
-                        print(f"{ship.name} placed! Here is your board as of now: ")
+                        i = row
+                        while i < row + ship.length:
+                            self.my_board.board[i][column] = ship.placeholder
+                            i += 1
+                        print(f"\n{ship.name} placed! Here is your board as of now:\n")
                         for row in self.my_board.board:
                             print(row)
                 else:

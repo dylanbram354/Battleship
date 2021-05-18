@@ -49,7 +49,7 @@ class Game:
             while row == '':
                 try:
                     row = input(f"\n{attacker.name}, time to attack! "
-                                f"Enter the row number for the space you wish to attack. ")
+                                f"Enter the ROW number you wish to attack. ")
                     row = int(row)
                     if row > attacker.opponent_board.rows or row < 0:
                         print(f"\nOops! Make sure you enter a valid row number from 1-{attacker.opponent_board.rows}. "
@@ -60,7 +60,7 @@ class Game:
             column = ''
             while column == '':
                 try:
-                    column = input(f"\nRow {row+1} selected. Enter the column number for the spot you " 
+                    column = input(f"\nRow {row+1} selected. Enter the COLUMN number for the spot you " 
                                    f"wish to attack. ")
                     column = int(column)
                     if column > attacker.opponent_board.columns or column < 0:
@@ -95,5 +95,6 @@ class Game:
                 for ships in defender.fleet:
                     print(ships.name)
 
-
+        input(f"\nPress 'enter' to continue to {defender.name}'s turn."
+              f"(No peeking, {attacker.name}!)")
 
