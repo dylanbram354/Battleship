@@ -1,5 +1,5 @@
 class Ship:
-    def __init__(self, name, length, hit_indicator):
+    def __init__(self, name, length, placeholder):
         self.name = name
         self.length = length
-        self.hit_indicator = hit_indicator
+        self.placeholder = placeholder
