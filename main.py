@@ -1,6 +1,6 @@
 from player import Player
-
+from game import Game
 
 if __name__ == '__main__':
-    player = Player()
-    player.place_ships()
+    game = Game()
+    game.run_game()

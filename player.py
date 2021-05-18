@@ -15,13 +15,7 @@ class Player:
         self.fleet = [self.destroyer, self.submarine, self.battleship_1, self.battleship_2, self.aircraft_carrier]
 
     def place_ships(self):
-        # start with ship of x dimension
-        # display_my_board
-        # ask user to place horizontally or vertically
-        # if vertical, ask for coordinates of topmost point. Horizontal, leftmost
-        # place ship by += 1 to each space. If space value > 1, that means there is overlap, so prompt again
-        #
-        print(f"Welcome {self.name}! Let's get started. Here is your board:\n")
+        print(f"Welcome {self.name}! Here is your board:\n")
         for row in self.my_board.board:
             print(row)
         print(f'\n"0" represents an empty, un-attacked space. '
@@ -136,12 +130,10 @@ class Player:
                     print(f"\nOops! Invalid input. Try again...")
         print(f"\nSuccess! All ships have been placed!")
 
-
-    def attack(self):
-        pass
-
     def display_opponent_board(self):
-        pass
+        print('\n"X" is a hit, "-" is a miss.')
+        for row in self.opponent_board.board:
+            print(row)
 
     def display_my_board(self):
         print('\nYour board:'
