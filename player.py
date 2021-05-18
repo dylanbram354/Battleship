@@ -1,3 +1,8 @@
+from destroyer import Destroyer
+from submarine import Submarine
+from battleship import Battleship
+from aircraft_carrier import Aircraft_Carrier
+
 def create_blank_board(rows, columns):
     board = []
     for i in range(rows):
@@ -19,6 +24,8 @@ class Player:
         # display_my_board
         # ask user to place horizontally or vertically
         # if vertical, ask for coordinates of topmost point. Horizontal, leftmost
+        # place ship by += 1 to each space. If space value > 1, that means there is overlap, so prompt again
+        #
         pass
 
     def attack(self):
