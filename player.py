@@ -73,11 +73,18 @@ class Player:
                     row = self.my_board.board[row]
                     i = column
                     while i < column + ship.length:
-                        row[i] = ship.placeholder
-                        i += 1
-                    print(f"{ship.name} placed! Here is your board as of now: ")
-                    for row in self.my_board.board:
-                        print(row)
+                        if row[i] == 0:
+                            row[i] = ship.placeholder
+                            i += 1
+                        else:
+                            print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
+                                  f"ship. Try again... ")
+                            direction = ''
+                            break
+                    if direction != '':
+                        print(f"{ship.name} placed! Here is your board as of now: ")
+                        for row in self.my_board.board:
+                            print(row)
                 elif direction == 'VERTICAL':
                     column = ''
                     while column == '':
@@ -112,11 +119,22 @@ class Player:
                     row -= 1
                     i = row
                     while i < row + ship.length:
-                        self.my_board.board[i][column] = ship.placeholder
-                        i += 1
-                    print(f"{ship.name} placed! Here is your board as of now: ")
-                    for row in self.my_board.board:
-                        print(row)
+                        if self.my_board.board[i][column] == 0:
+                            self.my_board.board[i][column] = ship.placeholder
+                            i += 1
+                        else:
+                            print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
+                                  f"ship. Try again... ")
+                            direction = ''
+                            break
+                    if direction != '':
+                        print(f"{ship.name} placed! Here is your board as of now: ")
+                        for row in self.my_board.board:
+                            print(row)
+                else:
+                    direction = ''
+                    print(f"\nOops! Invalid input. Try again...")
+        print(f"\nSuccess! All ships have been placed!")
 
 
     def attack(self):
