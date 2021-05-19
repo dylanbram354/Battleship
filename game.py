@@ -26,7 +26,7 @@ class Game:
                     board_size = int(board_size)
                     if not (5 <= board_size <= 25):
                         print(f"\nOops! That number is outside the permitted range. Please enter a"
-                              f" number from 10-20.")
+                              f" number from 5-25.")
                         board_size = ''
                 except ValueError:
                     print(f"\nOops! Invalid input. Try again...")
