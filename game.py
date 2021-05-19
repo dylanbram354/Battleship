@@ -1,6 +1,6 @@
 from player import Player
 from gameboard import Gameboard
-from ship import Ship
+
 
 class Game:
     def __init__(self):
@@ -110,7 +110,7 @@ class Game:
                 except ValueError:
                     print(f"\nOops! Invalid input. Try again...")
             column -= 1
-            if attacker.opponent_board.board[row][column] == 'X' or attacker.opponent_board.board[row][column] == '-':
+            if attacker.opponent_board.board[row][column] == 'XX' or attacker.opponent_board.board[row][column] == '00':
                 print(f"\nOops! You've already attacked that spot. Try again...")
             else:
                 marker = 1
