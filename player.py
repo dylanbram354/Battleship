@@ -177,3 +177,4 @@ class Player:
             else:
                 print(f'{e} {row}')
                 e += 1
+

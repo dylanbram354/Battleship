@@ -35,15 +35,16 @@ class Game:
             self.player_one.opponent_board = Gameboard(board_size, board_size)
             self.player_two.my_board = Gameboard(board_size, board_size)
             self.player_two.opponent_board = Gameboard(board_size, board_size)
+            self.create_fleets()
             self.player_one.name = input(f"\nPlayer One, please enter your name: ")
             self.player_two.name = input(f"\nPlayer Two, please enter your name: ")
             self.player_one.place_ships()
-            # e = 0
-            # while e < 20:
-            #     print(f"|")
-            #     e += 1
-            # print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
-            #       f"\n{self.player_two.name}, scroll up to view your completed board.")
+            e = 0
+            while e < 20:
+                print(f"|")
+                e += 1
+            print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
+                  f"\n{self.player_two.name}, scroll up to view your completed board.")
             self.player_two.place_ships()
             e = 0
             while e < 25:
@@ -135,3 +136,25 @@ class Game:
                     for ships in defender.fleet:
                         print(ships.name)
 
+    def create_fleets(self):
+        max_fleet = self.player_one.fleet
+        chosen_fleet = []
+        amount_of_ships = ''
+        while amount_of_ships == '':
+            try:
+                amount_of_ships = input("\nHow many ships would you like in each player's fleet? "
+                                        "Enter a number from 1-5. ")
+                amount_of_ships = int(amount_of_ships)
+                if not 1 <= amount_of_ships <= 5:
+                    print("\nOops! Please enter a number from 1-5. Try again...")
+                    amount_of_ships = ''
+            except ValueError:
+                print("\nOops! Please enter a number from 1-5. Try again...")
+                amount_of_ships = ''
+        i = 0
+        while i < amount_of_ships:
+            chosen_fleet.append(max_fleet[i])
+            i += 1
+        self.player_one.fleet = chosen_fleet
+        self.player_two.fleet = chosen_fleet
+        print(f"\nEach player has been assigned a fleet of {amount_of_ships} ship(s).")
