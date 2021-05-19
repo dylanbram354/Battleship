@@ -1,6 +1,6 @@
 from player import Player
 from gameboard import Gameboard
-
+from ship import Ship
 
 class Game:
     def __init__(self):
@@ -142,7 +142,8 @@ class Game:
                         print(ships.name)
 
     def create_fleets(self):
-        max_fleet = self.player_one.fleet
+        max_fleet = [Player().destroyer, Player().submarine, Player().battleship_1,
+                     Player().battleship_2, Player().aircraft_carrier]
         chosen_fleet = []
         amount_of_ships = ''
         while amount_of_ships == '':
