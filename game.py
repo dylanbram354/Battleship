@@ -40,19 +40,23 @@ class Game:
             self.player_one.name = input(f"\nPlayer One, please enter your name: ")
             self.player_two.name = input(f"\nPlayer Two, please enter your name: ")
             self.player_one.place_ships()
+            pause = input(f"\nPress enter to hide your board and continue to {self.player_two.name}'s turn.")
             e = 0
-            while e < 20:
+            while e < 30:
                 print(f"|")
                 e += 1
-            print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
-                  f"\n{self.player_two.name}, scroll up to view your completed board.")
+            print(f"\n(Hiding {self.player_one.name}'s board from {self.player_two.name}) "
+                  f"\n{self.player_one.name}, scroll up to view your completed board.")
+            pause = input(f"\nPress enter to continue to {self.player_two.name}'s turn. ")
             self.player_two.place_ships()
+            pause = input(f"\nPress enter to hide your board and continue to the game.")
             e = 0
-            while e < 25:
+            while e < 30:
                 print(f"|")
                 e += 1
             print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
-                  f"\n{self.player_two.name}, scroll up to view your completed board.")
+                  f"\n{self.player_two.name}, scroll up to view your completed board. "
+                  f"\n\nLet's start the game!")
             while len(self.player_one.fleet) > 0 and len(self.player_two.fleet) > 0:
                 self.attack(self.player_one, self.player_two)
                 if len(self.player_two.fleet) == 0:
