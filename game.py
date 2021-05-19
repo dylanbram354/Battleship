@@ -1,5 +1,5 @@
 from player import Player
-
+from gameboard import Gameboard
 
 class Game:
     def __init__(self):
@@ -20,7 +20,7 @@ class Game:
             board_size = ''
             while board_size == '':
                 board_size = input(f"\nHow many rows/columns would you like on your game board? "
-                                   f"Enter a number from 10-20.")
+                                   f"Enter a number from 10-20. ")
                 try:
                     board_size = int(board_size)
                     if not (10 <= board_size <= 20):
@@ -28,8 +28,14 @@ class Game:
                               f" number from 10-20.")
                         board_size = ''
                 except ValueError:
-                    print(f"\n")
-            self.player_one.name = input(f"\n\nPlayer One, please enter your name: ")
+                    print(f"\nOops! Invalid input. Try again...")
+                    board_size = ''
+            print(f"\nYou have chosen a game board size of {board_size} x {board_size}.")
+            self.player_one.my_board = Gameboard(board_size, board_size)
+            self.player_one.opponent_board = Gameboard(board_size, board_size)
+            self.player_two.my_board = Gameboard(board_size, board_size)
+            self.player_two.opponent_board = Gameboard(board_size, board_size)
+            self.player_one.name = input(f"\nPlayer One, please enter your name: ")
             self.player_one.place_ships()
             self.player_two.name = input(f"\n\nPlayer Two, please enter your name: ")
             self.player_two.place_ships()

@@ -31,8 +31,8 @@ class Player:
             while direction == '':
                 direction = input(f"\nNow placing {self.name}'s {ship.name}. "
                                   f'Would you like to place this ship vertically or horizontally?'
-                                  f'\nEnter "vertical" or "horizontal". ').upper()
-                if direction == 'HORIZONTAL':
+                                  f'\nEnter "v" for vertical or "h" for horizontal. ').upper()
+                if direction == 'H':
                     row = ''
                     while row == '':
                         try:
@@ -83,7 +83,7 @@ class Player:
                             i += 1
                         print(f"{ship.name} placed! Here is your board as of now: ")
                         self.display_my_board()
-                elif direction == 'VERTICAL':
+                elif direction == 'V':
                     column = ''
                     while column == '':
                         try:
