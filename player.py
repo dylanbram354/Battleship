@@ -115,23 +115,6 @@ class Player:
                         except ValueError:
                             column = ''
                             print(f"\nOops! Invalid input. Try again...")
-                    # row = ''
-                    # while row == '':
-                    #     try:
-                    #         row = input(f"\nYou have chosen to place {ship.name} in column {column}. "
-                    #                     f"Enter the the row number for the TOPMOST point of {ship.name} "
-                    #                     f"(1-{self.my_board.rows}): ")
-                    #         row = int(row)
-                    #         if row > self.my_board.rows or row <= 0:
-                    #             row = ''
-                    #             print(f"\nOops! Invalid input. Rows are numbered from 1-{self.my_board.rows}, "
-                    #                   f"top to bottom. Try again...")
-                    #         elif self.my_board.rows - row + 1 < ship.length:
-                    #             row = ''
-                    #             print(f"\nOops! {ship.name} is too long to fit in that spot. Try again!")
-                    #     except ValueError:
-                    #         row = ''
-                    #         print(f"\nOops! Invalid input. Try again...")
                     column -= 1
                     row -= 1
                     i = row
