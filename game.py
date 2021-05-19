@@ -36,11 +36,17 @@ class Game:
             self.player_two.my_board = Gameboard(board_size, board_size)
             self.player_two.opponent_board = Gameboard(board_size, board_size)
             self.player_one.name = input(f"\nPlayer One, please enter your name: ")
+            self.player_two.name = input(f"\nPlayer Two, please enter your name: ")
             self.player_one.place_ships()
-            self.player_two.name = input(f"\n\nPlayer Two, please enter your name: ")
+            # e = 0
+            # while e < 20:
+            #     print(f"|")
+            #     e += 1
+            # print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
+            #       f"\n{self.player_two.name}, scroll up to view your completed board.")
             self.player_two.place_ships()
             e = 0
-            while e < 20:
+            while e < 25:
                 print(f"|")
                 e += 1
             print(f"\n(Hiding {self.player_two.name}'s board from {self.player_one.name}) "
@@ -102,7 +108,7 @@ class Game:
                 print(f"\nOops! You've already attacked that spot. Try again...")
             else:
                 marker = 1
-        print(f"{attacker.name} launches a missile at {defender.name}'s row {row+1}, column {column+1}...")
+        print(f"\n{attacker.name} launches a missile at {defender.name}'s row {row+1}, column {column+1}...")
         attack_spot = defender.my_board.board[row][column]
         if attack_spot == '--':
             print(f"\nMiss!")
