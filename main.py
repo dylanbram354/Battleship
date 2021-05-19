@@ -13,3 +13,9 @@ if __name__ == '__main__':
     # # game.attack(p1, p2)
 
     game.run_game()
+    # game.player_two.display_my_board()
+
+    # Stuff to do:
+    # add numbering
+    # switch '-' with '0'
+    # choose game board size?
