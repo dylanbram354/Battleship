@@ -1,6 +1,7 @@
 from player import Player
 from gameboard import Gameboard
 
+
 class Game:
     def __init__(self):
         self.player_one = Player()
@@ -20,10 +21,10 @@ class Game:
             board_size = ''
             while board_size == '':
                 board_size = input(f"\nHow many rows/columns would you like on your game board? "
-                                   f"Enter a number from 5-20. ")
+                                   f"Enter a number from 5-25. ")
                 try:
                     board_size = int(board_size)
-                    if not (5 <= board_size <= 20):
+                    if not (5 <= board_size <= 25):
                         print(f"\nOops! That number is outside the permitted range. Please enter a"
                               f" number from 10-20.")
                         board_size = ''
@@ -55,7 +56,7 @@ class Game:
             while len(self.player_one.fleet) > 0 and len(self.player_two.fleet) > 0:
                 self.attack(self.player_one, self.player_two)
                 if len(self.player_two.fleet) == 0:
-                    print(f"\nGAME OVER! {self.player_two.name}'s fleet depleted!"
+                    print(f"\nGAME OVER! {self.player_two.name}'s fleet depleted! "
                           f"{self.player_one.name} wins!")
                     break
                 self.attack(self.player_two, self.player_one)
@@ -71,10 +72,9 @@ class Game:
                     print(f"\nInvalid input! Try again...")
                     user_input = ''
 
-
     def attack(self, attacker, defender):
-        input(f"\nPress 'enter' to continue to {attacker.name}'s turn. "
-              f"(No peeking, {defender.name}!)")
+        pause = input(f"\nPress 'enter' to continue to {attacker.name}'s turn. "
+                      f"(No peeking, {defender.name}!)")
         print(f"\n{attacker.name}'s turn! Here is your board: ")
         attacker.display_my_board()
         print(f"\nAnd here is what you know of {defender.name}'s board: ")
@@ -96,12 +96,13 @@ class Game:
             column = ''
             while column == '':
                 try:
-                    column = input(f"\nRow {row+1} selected. Enter the COLUMN number for the spot you " 
+                    column = input(f"\nRow {row + 1} selected. Enter the COLUMN number for the spot you "
                                    f"wish to attack. ")
                     column = int(column)
                     if column > attacker.opponent_board.columns or column < 0:
-                        print(f"\nOops! Make sure you enter a valid column number from 1-{attacker.opponent_board.columns}. "
-                              f"Try again...")
+                        print(
+                            f"\nOops! Make sure you enter a valid column number from 1-{attacker.opponent_board.columns}. "
+                            f"Try again...")
                 except ValueError:
                     print(f"\nOops! Invalid input. Try again...")
             column -= 1
@@ -110,10 +111,10 @@ class Game:
             else:
                 marker = 1
         e = 0
-        while e < 25:
+        while e < 30:
             print(f"|")
             e += 1
-        print(f"\n{attacker.name} launches a missile at {defender.name}'s row {row+1}, column {column+1}...")
+        print(f"\n{attacker.name} launches a missile at {defender.name}'s row {row + 1}, column {column + 1}...")
         attack_spot = defender.my_board.board[row][column]
         if attack_spot == '--':
             print(f"\nMiss!")
