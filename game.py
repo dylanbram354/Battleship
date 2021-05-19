@@ -20,10 +20,10 @@ class Game:
             board_size = ''
             while board_size == '':
                 board_size = input(f"\nHow many rows/columns would you like on your game board? "
-                                   f"Enter a number from 10-20. ")
+                                   f"Enter a number from 5-20. ")
                 try:
                     board_size = int(board_size)
-                    if not (10 <= board_size <= 20):
+                    if not (5 <= board_size <= 20):
                         print(f"\nOops! That number is outside the permitted range. Please enter a"
                               f" number from 10-20.")
                         board_size = ''
@@ -108,6 +108,10 @@ class Game:
                 print(f"\nOops! You've already attacked that spot. Try again...")
             else:
                 marker = 1
+        e = 0
+        while e < 25:
+            print(f"|")
+            e += 1
         print(f"\n{attacker.name} launches a missile at {defender.name}'s row {row+1}, column {column+1}...")
         attack_spot = defender.my_board.board[row][column]
         if attack_spot == '--':
