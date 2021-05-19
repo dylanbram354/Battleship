@@ -7,19 +7,18 @@ class Player:
         self.name = ''
         self.my_board = Gameboard(20, 20)
         self.opponent_board = Gameboard(20, 20)
-        self.destroyer = Ship('DESTROYER', 2, "D")
-        self.submarine = Ship('SUBMARINE', 3, "S")
+        self.destroyer = Ship('DESTROYER', 2, "DD")
+        self.submarine = Ship('SUBMARINE', 3, "SS")
         self.battleship_1 = Ship('BATTLESHIP 1', 4, "B1")
         self.battleship_2 = Ship('BATTLESHIP 2', 4, "B2")
-        self.aircraft_carrier = Ship('AIRCRAFT CARRIER', 5, "A")
+        self.aircraft_carrier = Ship('AIRCRAFT CARRIER', 5, "AC")
         self.fleet = [self.destroyer, self.submarine, self.battleship_1, self.battleship_2, self.aircraft_carrier]
 
     def place_ships(self):
         print(f"\nWelcome {self.name}! Here is your board:\n")
-        for row in self.my_board.board:
-            print(row)
-        print(f'\n"0" represents an empty, un-attacked space. '
-              f'\n"X" will represent hits, "-" will represent misses, and your ships will be marked with '
+        self.display_my_board()
+        print(f'\n"--" represents an empty, un-attacked space. '
+              f'\n"XX" will represent hits, "00" will represent misses, and your ships will be marked with '
               f'their respective indicators.'
               f'\n\nThere are {self.my_board.rows} rows and {self.my_board.columns} columns.'
               f'\nRows are numbered 1-{self.my_board.rows} from left to right, columns are numbered '
@@ -70,7 +69,7 @@ class Player:
                     row = self.my_board.board[row]
                     i = column
                     while i < column + ship.length:
-                        if row[i] == 0:
+                        if row[i] == '--':
                             i += 1
                         else:
                             print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
@@ -83,8 +82,7 @@ class Player:
                             row[i] = ship.placeholder
                             i += 1
                         print(f"{ship.name} placed! Here is your board as of now: ")
-                        for row in self.my_board.board:
-                            print(row)
+                        self.display_my_board()
                 elif direction == 'VERTICAL':
                     column = ''
                     while column == '':
@@ -121,7 +119,7 @@ class Player:
                     row -= 1
                     i = row
                     while i < row + ship.length:
-                        if self.my_board.board[i][column] == 0:
+                        if self.my_board.board[i][column] == '--':
                             i += 1
                         else:
                             print(f"\nOops! {ship.name} can't be placed there, as it would overlap with another "
@@ -134,19 +132,48 @@ class Player:
                             self.my_board.board[i][column] = ship.placeholder
                             i += 1
                         print(f"\n{ship.name} placed! Here is your board as of now:\n")
-                        for row in self.my_board.board:
-                            print(row)
+                        self.display_my_board()
                 else:
                     direction = ''
                     print(f"\nOops! Invalid input. Try again...")
         print(f"\nSuccess! All ships have been placed!")
 
     def display_opponent_board(self):
-        print('\n"X" is a hit, "-" is a miss.')
+        row_numbers = []
+        i = 1
+        for elem in self.opponent_board.board[0]:
+            if len(f"{i}") < 2:
+                row_numbers.append(f"0{i}")
+                i += 1
+            else:
+                row_numbers.append(f"{i}")
+                i += 1
+        print(f'\n   {row_numbers}')
+        e = 1
         for row in self.opponent_board.board:
-            print(row)
+            if len(f"{e}") < 2:
+                print(f'0{e} {row}')
+                e += 1
+            else:
+                print(f'{e} {row}')
+                e += 1
 
     def display_my_board(self):
-        print('\n"X" is opponent hit, "-" is opponent miss.')
+        row_numbers = []
+        i = 1
+        for elem in self.my_board.board[0]:
+            if len(f"{i}") < 2:
+                row_numbers.append(f"0{i}")
+                i += 1
+            else:
+                row_numbers.append(f"{i}")
+                i += 1
+        print(f'\n   {row_numbers}')
+        e = 1
         for row in self.my_board.board:
-            print(row)
+            if len(f"{e}") < 2:
+                print(f'0{e} {row}')
+                e += 1
+            else:
+                print(f'{e} {row}')
+                e += 1

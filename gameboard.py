@@ -3,7 +3,7 @@ def create_blank_board(rows, columns):
     for i in range(rows):
         col = []
         for j in range(columns):
-            col.append(0)
+            col.append('--')
         board.append(col)
     return board
 
