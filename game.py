@@ -1,11 +1,15 @@
 from player import Player
 from gameboard import Gameboard
+from random import seed
+from random import randint
+from datetime import datetime
 
 
 class Game:
     def __init__(self):
         self.player_one = Player()
         self.player_two = Player()
+        self.computer_game = False
 
     def run_game(self):
         print(f"\nWelcome to BATTLESHIP! "
@@ -37,10 +41,29 @@ class Game:
             self.player_two.my_board = Gameboard(board_size, board_size)
             self.player_two.opponent_board = Gameboard(board_size, board_size)
             self.create_fleets()
-            self.player_one.name = input(f"\nPlayer One, please enter your name: ")
-            self.player_two.name = input(f"\nPlayer Two, please enter your name: ")
-            self.player_one.place_ships()
-            pause = input(f"\nPress enter to hide your board and continue to {self.player_two.name}'s turn.")
+            computer_game = ''
+            while computer_game == '':
+                computer_game = input(
+                    f"\nPlay against a computer [Y/N]? ")[0].upper()
+                if computer_game == 'Y':
+                    self.computer_game = True
+                elif computer_game == 'N':
+                    self.computer_game = False
+                else:
+                    print("Invalid selection.")
+                    computer_game = ''
+
+            self.player_one.name = input(
+                f"\nPlayer One, please enter your name: ")
+
+            if self.computer_game:
+                self.player_two.name = "Fred"
+            else:
+                self.player_two.name = input(
+                    f"\nPlayer Two, please enter your name: ")
+            self.player_one.place_human_ships()
+            pause = input(
+                f"\nPress enter to hide your board and continue to {self.player_two.name}'s turn.")
             e = 0
             while e < 30:
                 print(f"|")
@@ -48,8 +71,14 @@ class Game:
             print(f"\n(Hiding {self.player_one.name}'s board from {self.player_two.name}) "
                   f"\n{self.player_one.name}, scroll up to view your completed board.")
             pause = input(f"\nPress enter to continue to {self.player_two.name}'s turn. ")
-            self.player_two.place_ships()
-            pause = input(f"\nPress enter to hide your board and continue to the game.")
+
+            if self.computer_game:
+                self.player_two.place_computer_ships()
+                print(f"\n{self.player_two.name}'s ships placed!")
+            else:
+                self.player_two.place_human_ships()
+                pause = input(
+                    f"\nPress enter to hide your board and continue to the game.")
             e = 0
             while e < 30:
                 print(f"|")
@@ -63,7 +92,10 @@ class Game:
                     print(f"\nGAME OVER! {self.player_two.name}'s fleet depleted! "
                           f"{self.player_one.name} wins!")
                     break
-                self.attack(self.player_two, self.player_one)
+                if self.computer_game:
+                    self.computer_attack(self.player_two, self.player_one)
+                else:
+                    self.attack(self.player_two, self.player_one)
                 if len(self.player_one.fleet) == 0:
                     print(f"\nGAME OVER! {self.player_one.name}'s fleet depleted! "
                           f"{self.player_two.name} wins!")
@@ -141,6 +173,43 @@ class Game:
                     for ships in defender.fleet:
                         print(ships.name)
 
+    def computer_attack(self, attacker, defender):
+        seed(datetime.now())
+        new_guess = 'invalid'
+        while new_guess != 'valid':
+            row = randint(0, attacker.opponent_board.rows - 1)
+            column = randint(0, attacker.opponent_board.columns - 1)
+
+            potential_spot = attacker.opponent_board.board[row][column]
+            if potential_spot == '00':
+                continue
+            elif potential_spot == 'XX':
+                continue
+
+            new_guess = 'valid'
+            print(f"\n{attacker.name} launches a missile at {defender.name}'s row {row + 1}, column {column + 1}...")
+            attack_spot = defender.my_board.board[row][column]
+            if attack_spot == '--':
+                print(f"\nMiss!")
+                attacker.opponent_board.board[row][column] = '00'
+                defender.my_board.board[row][column] = '00'
+            else:
+                print(f"\nHIT!")
+                attacker.opponent_board.board[row][column] = 'XX'
+                defender.my_board.board[row][column] = 'XX'
+            for ship in defender.fleet:
+                alive = 'no'
+                for row in defender.my_board.board:
+                    if ship.placeholder in row:
+                        alive = 'yes'
+                if alive == 'no':
+                    print(f"\n{attacker.name} sunk {defender.name}'s {ship.name}!")
+                    defender.fleet.remove(ship)
+                    if len(defender.fleet) > 0:
+                        print(f"\nRemaining ships in {defender.name}'s fleet:")
+                        for ships in defender.fleet:
+                            print(ships.name)
+
     def create_fleets(self):
         max_fleet = [Player().destroyer, Player().submarine, Player().battleship_1,
                      Player().battleship_2, Player().aircraft_carrier]
@@ -161,6 +230,6 @@ class Game:
         while i < amount_of_ships:
             chosen_fleet.append(max_fleet[i])
             i += 1
-        self.player_one.fleet = chosen_fleet
-        self.player_two.fleet = chosen_fleet
+        self.player_one.fleet = chosen_fleet.copy()
+        self.player_two.fleet = chosen_fleet.copy()
         print(f"\nEach player has been assigned a fleet of {amount_of_ships} ship(s).")

@@ -1,6 +1,8 @@
 from gameboard import Gameboard
 from ship import Ship
-
+from random import seed
+from random import randint
+from datetime import datetime
 
 class Player:
     def __init__(self):
@@ -14,7 +16,7 @@ class Player:
         self.aircraft_carrier = Ship('AIRCRAFT CARRIER', 5, "AC")
         self.fleet = [self.destroyer, self.submarine, self.battleship_1, self.battleship_2, self.aircraft_carrier]
 
-    def place_ships(self):
+    def place_human_ships(self):
         print(f"\nWelcome {self.name}! Here is your board:")
         self.display_my_board()
         print(f'\n"--" represents an empty, un-attacked space. '
@@ -138,6 +140,43 @@ class Player:
                     print(f"\nOops! Invalid input. Try again...")
         print(f"\nSuccess! All ships have been placed!")
 
+    def place_computer_ships(self):
+        seed(datetime.now())
+        for ship in self.fleet:
+            placed = False
+            while not placed:
+                if 0 == randint(0, 1):
+                    # Vertical ship. Generate starting position
+                    column = randint(0, (self.my_board.columns - 1))
+                    row = randint(0, ((self.my_board.rows - 1) - ship.length))
+
+                    for i in range(row, (row + ship.length)):
+                        if self.my_board.board[i][column] != '--':
+                            break
+
+                        if i == ((row + ship.length) - 1):
+                            # Place ship
+                            for j in range(row, (row + ship.length)):
+                                self.my_board.board[j][column] = ship.placeholder
+                            
+                            placed = True
+                else:
+                    # Horizontal ship. Generate starting position
+                    row = randint(0, (self.my_board.rows - 1))
+                    column = randint(0, ((self.my_board.columns - 1) - ship.length))
+
+                    for i  in range(column, (column + ship.length)):
+                        if self.my_board.board[row][i] != '--':
+                            break
+
+                        if i == ((column + ship.length) - 1):
+                            # Place ship
+                            for j in range(column, (column + ship.length)):
+                                self.my_board.board[row][j] = ship.placeholder
+
+                            placed = True
+
+
     def display_opponent_board(self):
         row_numbers = []
         i = 1
@@ -177,4 +216,3 @@ class Player:
             else:
                 print(f'{e} {row}')
                 e += 1
-
